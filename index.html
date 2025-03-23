@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Will You Be Mine Forever?</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #ffd6e0, #ffcad4);
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #d81159;
+            margin-top: 30px;
+            animation: popIn 1s ease-in-out;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #6a0572;
+            margin: 20px auto;
+            max-width: 600px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background-color: #ff0035;
+        }
+
+        .love-form {
+            background-color: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        input, textarea {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+
+        .submit-btn {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #ff0035;
+        }
+
+        .image-container {
+            margin: 40px 0;
+        }
+
+        #proposal-img {
+            width: 300px;
+            height: auto;
+            border-radius: 20px;
+            transition: transform 1s ease, box-shadow 1s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .transitioned {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Heart Animation */
+        .heart {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: red;
+            transform: rotate(45deg);
+            animation: float 6s infinite ease-in;
+            top: 100%;
+        }
+
+        .heart::before, .heart::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: red;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -7.5px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: -7.5px;
+            top: 0;
+        }
+
+        @keyframes float {
+            0% { transform: rotate(45deg) translateY(0); opacity: 1; }
+            100% { transform: rotate(45deg) translateY(-1000px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Will You Be Mine Forever? 💖</h1>
+
+    <p>To the love of my life, you make my world brighter every single day.
+         I love you and i've always loved you and i'll keep loving you. Ummaahh </p>
+    <div class="image-container">
+        <img src="img folder.jpg"  id="proposal-img" alt="Us Together" width="120">
+    </div>
+
+    <button class="btn" onclick="animateImage()">Click to Reveal My Heart</button>
+
+    <div class="love-form">
+        <h2>Write Me Back 💌</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required><br>
+            <textarea rows="5" placeholder="Your Message to Me..." required></textarea><br>
+            <button type="submit" class="submit-btn">Send Love</button>
+        </form>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas class="confetti" id="confettiCanvas"></canvas>
+
+    <!-- Background Music -->
+    <audio id="bg-music" autoplay loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- JavaScript for Image Transition + Confetti + Hearts -->
+    <script>
+        function animateImage() {
+            const img = document.getElementById('proposal-img');
+            img.classList.toggle('transitioned');
+            launchConfetti();
+        }
+
+        // Confetti
+        const confettiCanvas = document.getElementById('confettiCanvas');
+        const ctx = confettiCanvas.getContext('2d');
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+
+        let confetti = [];
+        for (let i = 0; i < 100; i++) {
+            confetti.push({
+                x: Math.random() * confettiCanvas.width,
+                y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+                r: Math.random() * 6 + 4,
+                d: Math.random() * 20 + 10,
+                color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                tilt: Math.random() * 10 - 10,
+                tiltAngleIncremental: Math.random() * 0.07 + 0.05,
+                tiltAngle: 0
+            });
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            confetti.forEach((c, i) => {
+                ctx.beginPath();
+                ctx.lineWidth = c.r;
+                ctx.strokeStyle = c.color;
+                ctx.moveTo(c.x + c.tilt + c.r / 2, c.y);
+                ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 2);
+                ctx.stroke();
+            });
+
+            updateConfetti();
+        }
+
+        function updateConfetti() {
+            confetti.forEach((c, i) => {
+                c.y += Math.cos(c.d) + 1 + c.r / 2;
+                c.x += Math.sin(c.d);
+                c.tiltAngle += c.tiltAngleIncremental;
+                c.tilt = Math.sin(c.tiltAngle) * 15;
+
+                if (c.y > confettiCanvas.height) {
+                    confetti[i] = {
+                        ...c,
+                        x: Math.random() * confettiCanvas.width,
+                        y: -10,
+                    };
+                }
+            });
+        }
+
+        function launchConfetti() {
+            let duration = 3000;
+            let endTime = Date.now() + duration;
+            (function frame() {
+                drawConfetti();
+                if (Date.now() < endTime) {
+                    requestAnimationFrame(frame);
+                } else {
+                    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                }
+            })();
+        }
+
+        // Auto confetti on load
+        window.onload = () => {
+            launchConfetti();
+            createHearts();
+        };
+
+        // Hearts
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 6000);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
